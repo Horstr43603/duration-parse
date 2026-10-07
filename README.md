@@ -18,3 +18,10 @@ Supported units: `ms` (1), `s` (1000), `m` (60 000), `h` (3 600 000), `d` (86 40
 ## The awkward edge
 
 A `P` prefix without a `T` is the ISO marker for calendar fields (`P1Y` = one year). This library throws on it rather than guessing how many days a year contains. If you need calendar durations, this is the wrong tool.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
